@@ -1,0 +1,8 @@
+#+title:
+#+author: conao3
+#+date:
+#+options: ^:{}
+
+* Config                                                           :noexport:
+
+* chapter1 is just a guidance
