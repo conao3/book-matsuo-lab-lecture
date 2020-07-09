@@ -1,0 +1,845 @@
+#+title:
+#+author: conao3
+#+date:
+#+options: ^:{}
+
+* Config                                                           :noexport:
+
+* chapter2
+#+begin_src python
+import numpy as np
+#+end_src
+
+#+RESULTS[60615104acd1cc2e91589bcebaab6b1456ac9ad0]:
+
+* 第2回講義
+** numpy
+*** 概要
+*** インポート
+*** 行列・ベクトルの生成・初期化
+- array :: 要素指定によるnumpy配列の生成
+
+  #+begin_src python
+W = np.array([[1, 2, 3], [4, 5, 6]])
+print(W)
+  #+end_src
+
+  #+RESULTS[d007902c9d730ebada64f718030b6eb9f7edf7f9]:
+  : [[1 2 3]
+  :  [4 5 6]]
+
+  #+begin_src python
+W = np.arange(9).reshape([3,3])
+print(W)
+
+W = np.arange(10).reshape([2,5])
+print(W)
+  #+end_src
+
+  #+RESULTS[2589bd54aca4d3a695c3add43b06764acdd8c65b]:
+  : [[0 1 2]
+  :  [3 4 5]
+  :  [6 7 8]]
+  : [[0 1 2 3 4]
+  :  [5 6 7 8 9]]
+
+- shape :: numpy配列の次元
+
+  #+begin_src python
+W = np.array([[1, 2, 3], [4, 5, 6]])
+print(W.shape)
+  #+end_src
+
+  #+RESULTS[3990f262c0c7e01414dddee050c81de7f5b8a312]:
+  : (2, 3)
+
+- zeros :: 0からなるnumpy配列の生成(shapeを指定)
+
+  #+begin_src python
+W = np.zeros([3,3])
+print(W)
+  #+end_src
+
+  #+RESULTS[1ec2c758b62951bc2340581ad7c84110eb74f8c4]:
+  : [[0. 0. 0.]
+  :  [0. 0. 0.]
+  :  [0. 0. 0.]]
+
+- ones :: 1からなるnumpy配列の生成(shapeを指定)
+
+  #+begin_src python
+W = ones([3,3])
+print(W)
+  #+end_src
+
+  #+RESULTS[e2dbb9da48976d814860b83d1143444419b76661]:
+  : [[1. 1. 1.]
+  :  [1. 1. 1.]
+  :  [1. 1. 1.]]
+
+- arange :: [start, stop)の連番numpy配列の生成
+
+  #+begin_src python
+W = np.arange(9)
+print(W)
+
+W = np.arange(9).reshape([3,3])
+print(W)
+  #+end_src
+
+  #+RESULTS[71c8f0f7a8d0d0625f2c2ed843e586b307be14f4]:
+  : [0 1 2 3 4 5 6 7 8]
+  : [[0 1 2]
+  :  [3 4 5]
+  :  [6 7 8]]
+
+- linspace :: [start, stop]をN等分した境界値
+
+  #+begin_src python
+W = np.linspace(0, 10, 11)
+print(W)
+
+W = np.linspace(0, 10, 11, dtype=int)
+print(W)
+
+W = np.linspace(0, 1, 10, endpoint=False)
+print(W)
+  #+end_src
+
+  #+RESULTS[fe1200980939a950492ee2d2bcda9c0b777dc02b]:
+  : [ 0.  1.  2. ...  8.  9. 10.]
+  : [ 0  1  2 ...  8  9 10]
+  : [0.  0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9]
+
+*** 行列・ベクトルの操作
+- transpose :: 転置
+
+  #+begin_src python
+W = np.arange(9).reshape([3,3])
+print(W.T)
+  #+end_src
+
+  #+RESULTS[c7567e3760bc0ad4cdff0b0b15745ae47d6480cd]:
+  : [[0 1 2]
+  :  [3 4 5]
+  :  [6 7 8]]
+  : [[0 3 6]
+  :  [1 4 7]
+  :  [2 5 8]]
+
+- flatten :: numpy配列の1次元化
+
+  #+begin_src python
+W = np.arange(9).reshape([3,3])
+print(W.flatten())
+  #+end_src
+
+  #+RESULTS[9bc01a40cdec92bc823fb346dd9d61405faea3e6]:
+  : [0 1 2 3 4 5 6 7 8]
+
+- reshape :: numpy配列の形状（次元）の変換
+
+  #+begin_src python
+W = np.arange(9).reshape([3,3])
+W = W.reshape([9,1])
+print(W)
+
+W = W.reshape([1,9])
+print(W)
+
+W = W.reshape([9])
+print(W)
+
+W = W.reshape(9)
+print(W)
+  #+end_src
+
+  #+RESULTS[79ab3074e1e629798a9994ea5eb03b376e644282]:
+  #+begin_example
+    [[0]
+     [1]
+     [2]
+     [3]
+     [4]
+     [5]
+     [6]
+     [7]
+     [8]]
+    [[0 1 2 3 4 5 6 7 8]]
+    [0 1 2 3 4 5 6 7 8]
+    [0 1 2 3 4 5 6 7 8]
+  #+end_example
+
+- slice :: 要素アクセス、スライス
+
+  #+begin_src python
+W = np.arange(9).reshape([3,3])
+print(W)
+  #+end_src
+
+  #+RESULTS[a4e136b01eabafa7defe974aa97bf1510a0ff337]:
+  : [[0 1 2]
+  :  [3 4 5]
+  :  [6 7 8]]
+
+  #+begin_src python
+print(W[0])
+print(W[1])
+print(W[2])
+  #+end_src
+
+  #+RESULTS[cf7422a051ffd3746fb826f9f7e9c28929625178]:
+  : [0 1 2]
+  : [3 4 5]
+  : [6 7 8]
+
+  #+begin_src python
+print(W[0][0])
+print(W[0, 0])
+  #+end_src
+
+  #+RESULTS[3246383c8005aa7c9d2d8c658853792a42f7a4ad]:
+  : 0
+  : 0
+
+  #+begin_src python
+print(W[0, :])
+print(W[:, 0])
+  #+end_src
+
+  #+RESULTS[69835162f3f2f2149423a588c9f9b981d9c5290b]:
+  : [0 1 2]
+  : [0 3 6]
+
+  #+begin_src python
+print(W[::-1])
+print(W.flatten()[::-1].reshape([3,3]))
+  #+end_src
+
+  #+RESULTS[8f4814af9263ae30aba2ead85fc6d092b6ef1b63]:
+  : [[6 7 8]
+  :  [3 4 5]
+  :  [0 1 2]]
+  : [[8 7 6]
+  :  [5 4 3]
+  :  [2 1 0]]
+
+- index :: インデックスによる要素アクセス（Ingteger array indexing）
+
+  #+begin_src python
+W = np.arange(9).reshape([3,3])
+print(W)
+  #+end_src
+
+  #+RESULTS[a4e136b01eabafa7defe974aa97bf1510a0ff337]:
+  : [[0 1 2]
+  :  [3 4 5]
+  :  [6 7 8]]
+
+  #+begin_src python
+# get element at (0,1), (1,0), (2,2)
+print(W[[0, 1, 2],
+        [1, 0, 2]])
+  #+end_src
+
+  #+RESULTS[d7b913e9330907781914fba3fefe8c8e7e197619]:
+  : [1 3 8]
+
+  #+begin_src python
+W[np.arange(3), [1, 0, 2]] += 10
+print(W)
+  #+end_src
+
+  #+RESULTS[54a57cfa1e548c711a1d3bd2269e2a9c608efb54]:
+  : [[ 0 11  2]
+  :  [13  4  5]
+  :  [ 6  7 18]]
+
+- condition :: 条件式による要素アクセス（Boolean array indexing）
+
+  #+begin_src python
+W = np.arange(9).reshape([3,3])
+print(W)
+  #+end_src
+
+  #+RESULTS[a4e136b01eabafa7defe974aa97bf1510a0ff337]:
+  : [[0 1 2]
+  :  [3 4 5]
+  :  [6 7 8]]
+
+  #+begin_src python
+print(W[W<4])
+  #+end_src
+
+  #+RESULTS[389c35ae6673f8de731018ec04a255d2c914ba69]:
+  : [0 1 2 3]
+
+  #+begin_src python
+W[W<4] += 10
+print(W)
+  #+end_src
+
+  #+RESULTS[6edf8ecaae07db19388facd96fd8ce123314ec1c]:
+  : [[10 11 12]
+  :  [13  4  5]
+  :  [ 6  7  8]]
+
+  #+begin_src python
+print(np.where(W<10))
+print(W[np.where(W<10)])
+  #+end_src
+
+  #+RESULTS[9bac12ba96261582ebca23d71f6d59c84c4ddb1f]:
+  : (array([1, 1, 2, 2, 2]), array([1, 2, 0, 1, 2]))
+  : [4 5 6 7 8]
+
+*** 行列・ベクトルに関する計算
+- スカラー演算
+
+#+begin_src python
+W = np.arange(9).reshape([3,3])
+print(W)
+#+end_src
+
+#+RESULTS[a4e136b01eabafa7defe974aa97bf1510a0ff337]:
+: [[0 1 2]
+:  [3 4 5]
+:  [6 7 8]]
+
+#+begin_src python
+print(W+10)
+print(W*2)
+print(-W)
+#+end_src
+
+#+RESULTS[b2a79a70d633aea31a5583a33d99aa167008d880]:
+: [[10 11 12]
+:  [13 14 15]
+:  [16 17 18]]
+: [[ 0  2  4]
+:  [ 6  8 10]
+:  [12 14 16]]
+: [[ 0 -1 -2]
+:  [-3 -4 -5]
+:  [-6 -7 -8]]
+
+- 集約演算 (sum, mean, max, minなど)
+
+  #+begin_src python
+W = np.arange(9).reshape([3,3])
+print(W)
+  #+end_src
+
+  #+RESULTS[a4e136b01eabafa7defe974aa97bf1510a0ff337]:
+  : [[0 1 2]
+  :  [3 4 5]
+  :  [6 7 8]]
+
+  #+begin_src python
+print(W.sum())
+print(W.mean())
+print(W.max())
+print(W.min())
+  #+end_src
+
+  #+RESULTS[380e9ce2b9a9ea8bc7e1a9d7376a8bf894ee51f1]:
+  : 36
+  : 4.0
+  : 8
+  : 0
+  : [6 7 8]
+  : [2 5 8]
+
+  #+begin_src python
+    print(W.sum(axis=0))            # x axis (↓)
+    print(W.sum(axis=1))            # y axis (→)
+    print(W.max(axis=0))
+    print(W.max(axis=1))
+  #+end_src
+
+  #+RESULTS[3c6ed0e6e8ceedcca55c2b410a2def897f6abd80]:
+  : [ 9 12 15]
+  : [ 3 12 21]
+  : [6 7 8]
+  : [2 5 8]
+
+- ノルム
+
+  #+begin_src python
+    W = np.arange(3)
+    print(np.linalg.norm(W))
+
+    W = np.ones(2)
+    print(W)
+    print(np.linalg.norm(W))        # norm of (1,1) is sqrt(2)
+  #+end_src
+
+  #+RESULTS[f1af5db86e6145c099b5df1c453e4f27b85eb615]:
+  : 2.23606797749979
+  : [1. 1.]
+  : 1.4142135623730951
+
+- 行列積・テンソル積（matmul (dot), tensordot, einsum）
+  - mutmul(dot) :: 行列積
+
+    #+begin_src python
+A = np.arange(9).reshape([3,3])
+B = np.array([[1, 0, 0],
+              [1, 2, 0],
+              [1, 0, 0]])
+print(A)
+print(B)
+print(np.matmul(A, B))
+print(A @ B)
+    #+end_src
+
+    #+RESULTS[1b23f42ef3fbf556ab75cd787e257ee239711938]:
+    #+begin_example
+      [[0 1 2]
+       [3 4 5]
+       [6 7 8]]
+      [[1 0 0]
+       [1 2 0]
+       [1 0 0]]
+      [[ 3  2  0]
+       [12  8  0]
+       [21 14  0]]
+      [[ 3  2  0]
+       [12  8  0]
+       [21 14  0]]
+    #+end_example
+
+    np.dotはベクトルと行列だけの演算についてmatmulと同等。
+    テンソルが絡むと結果が変わる。
+    #+begin_src python
+A = np.arange(9).reshape([3,3])
+B = np.array([[1, 0, 0],
+              [1, 2, 0],
+              [1, 0, 0]])
+print(A)
+print(B)
+print(np.dot(A, B))
+    #+end_src
+
+    #+RESULTS[7cd961c3b5c8b7fcaf91287de6beb4fc53f3efd5]:
+    : [[0 1 2]
+    :  [3 4 5]
+    :  [6 7 8]]
+    : [[1 0 0]
+    :  [1 2 0]
+    :  [1 0 0]]
+    : [[ 3  2  0]
+    :  [12  8  0]
+    :  [21 14  0]]
+
+  - tensordot :: テンソル積
+
+    テンソル積には積和を取る軸を指定できるtensordotを使用する（ =C = np.tensordot(A, B, axes = ?)= ）
+    例えばA,Bがそれぞれ3階のテンソルの時は
+    
+    - axes=0 :: $c_{ijklmn} = a_{ijk}b_{lmn}$
+    - axes=1 :: $c_{ijlm} = \sum_{k} a_{ijk}b_{klm}$
+    - axes=2 (default) :: $c_{il} = \sum_{j,k} a_{ijk}b_{jkl} \left(\neq \sum_{j,k} a_{ijk}b_{kjl}\right)$
+
+    #+begin_src python
+      A = np.arange(18).reshape(2,3,3)
+      B = np.arange(36).reshape(3,3,4)
+
+      print(np.tensordot(A, B).shape)
+      print(np.tensordot(A, B, axes=1).shape)
+      print(np.tensordot(A, B, axes=0).shape)
+    #+end_src
+
+    #+RESULTS[e5a59751cf178aab36e2697ced25ac9c36518d09]:
+    : (2, 4)
+    : (2, 3, 3, 4)
+    : (2, 3, 3, 3, 3, 4)
+
+  - einsum :: アインシュタインの縮約規則
+
+    テンソル積一般を表現でき、表現力の意味では最も強力。
+
+    なお、積和の式が与えられた時のeinsumの表現は一般に次のようにして得ることができる（例： $c_{ik} = \sum_{j} a_{ij}\times b_{jk}$ ）
+    1. 変数名を消す（例： $ik = \sum_{j} ij \times jk$ ）
+    2. 積（ $\times$ ）をカンマで置き換える（例： $ik = \sum_{j} ij, jk$ ）
+    3. シグマを消す（例： $ik = ij, jk$ ）
+    4. 左辺右辺を反転させ、等号を->にする（例： $ij, jk -> ik$ ）
+    #+begin_src python
+      # einsum
+      A = np.arange(25).reshape(5,5)
+      b = np.arange(5)
+      b2 = np.arange(5) + 1
+
+      # トレース
+      print(np.einsum('ii', A))   # C = \sum_{i} a_{ii}
+      print(np.trace(A))
+      print()
+
+      # 転置
+      print(np.einsum('ji', A))   # c_{ij} = a_{ji}
+      print(A.T)
+      print()
+
+      # 内積
+      print(np.einsum('i,i', b, b2))  # C = \sum_{i} b_{i}*b2_{i}
+      print(np.inner(b, b2))
+      print()
+
+      # 対角成分
+      print(np.einsum('ii->i', A))    # c_{i} = a_{ii}
+      print(np.diag(A))
+      print()
+    #+end_src
+
+    #+RESULTS[fd74a75fabf8e4440f315cdac17b6e5cb2f88b57]:
+    #+begin_example
+      60
+      60
+
+      [[ 0  5 10 15 20]
+       [ 1  6 11 16 21]
+       [ 2  7 12 17 22]
+       [ 3  8 13 18 23]
+       [ 4  9 14 19 24]]
+      [[ 0  5 10 15 20]
+       [ 1  6 11 16 21]
+       [ 2  7 12 17 22]
+       [ 3  8 13 18 23]
+       [ 4  9 14 19 24]]
+
+      40
+      40
+
+      [ 0  6 12 18 24]
+      [ 0  6 12 18 24]
+    #+end_example
+
+    #+begin_src python
+      # 軸指定和
+      print(np.einsum('ij->j', A))    # c_{j} = \sum_{i} a_{ij}
+      print(np.sum(A, axis=0))
+      print()
+
+      # 行列ベクトル積
+      print(np.einsum('ij,j->i', A, b))   # c_{i} = \sum_{j} a_{ij}*b_{j}
+      print(np.matmul(A, b))
+      print()
+
+      # outer product（いわゆる直積で、クロス積ではない）
+      print(np.einsum('i,j->ij', b, b2))  # c_{ij} = b_{i}*b2_{j}
+      print(np.outer(b, b2))
+      print()
+
+      # 行列積（matmul）
+      A = np.arange(6).reshape((3,2))
+      B = np.arange(12).reshape((4,3))
+      print(np.einsum('ij,ki->jk', A, B))     # c_{jk} = \sum_{i} a_{ij}*b_{ki}
+      print(np.matmul(A.T, B.T))
+      print()
+
+      # テンソル積（tensordot）
+      A = np.arange(18).reshape(2,3,3)
+      B = np.arange(36).reshape(3,3,4)
+      print(np.einsum('ijk,jkl->il', A, B))   # c_{il} = \sum_{j,k} a_{ijk}*b_{jkl}
+      print(np.tensordot(A, B)) # 
+    #+end_src
+
+    #+RESULTS[864f75dccae7662b8ea147716a2d6c0882d8ea3c]:
+    #+begin_example
+      [50 55 60 65 70]
+      [50 55 60 65 70]
+
+      [ 30  80 130 180 230]
+      [ 30  80 130 180 230]
+
+      [[ 0  0  0  0  0]
+       [ 1  2  3  4  5]
+       [ 2  4  6  8 10]
+       [ 3  6  9 12 15]
+       [ 4  8 12 16 20]]
+      [[ 0  0  0  0  0]
+       [ 1  2  3  4  5]
+       [ 2  4  6  8 10]
+       [ 3  6  9 12 15]
+       [ 4  8 12 16 20]]
+
+      [[10 28 46 64]
+       [13 40 67 94]]
+      [[10 28 46 64]
+       [13 40 67 94]]
+
+      [[ 816  852  888  924]
+       [2112 2229 2346 2463]]
+      [[ 816  852  888  924]
+       [2112 2229 2346 2463]]
+    #+end_example
+*** Broadcasting
+- 概要
+
+  計算が成立するように、要素の数を合わせてくれる
+  #+begin_src python
+W = np.arange(9).reshape([3,3])
+print(W + 10)
+print(W + [10, 20, 30])
+print(W + [[10],
+           [20],
+           [30]])
+  #+end_src
+
+  #+RESULTS[a5632952c02d1787e535286a964eb87bb42e3260]:
+  : [[10 11 12]
+  :  [13 14 15]
+  :  [16 17 18]]
+  : [[10 21 32]
+  :  [13 24 35]
+  :  [16 27 38]]
+  : [[10 11 12]
+  :  [23 24 25]
+  :  [36 37 38]]
+
+- numpy.newaxis
+
+  配列や行列に対して新しい次元を追加できるオブジェクト。
+  #+begin_src python
+W = np.array([[1, 2, 3], [4, 5, 6]])
+x = np.array([7, 8, 9])
+
+print(W.shape)
+print(W.T.shape)
+print()
+
+print(x.shape)
+print(x.T.shape)  # x と x.T の shape は同じ
+print()
+
+print(x[np.newaxis, :])  # two dimension
+print(x[np.newaxis, :].T)
+print(x[np.newaxis, :].shape)
+print(x[np.newaxis, :].T.shape)
+print()
+
+print(x[:, np.newaxis])  # two dimension with different shape
+print(x[:, np.newaxis].T)
+print(x[:, np.newaxis].shape)
+print(x[:, np.newaxis].T.shape)
+print()
+
+print(x[np.newaxis].shape)  # x[np.newaxis,:]と同じ
+  #+end_src
+
+  #+RESULTS[d1328e6f9fafb3e29f25e5d8a15406ab2383c573]:
+  #+begin_example
+    (2, 3)
+    (3, 2)
+
+    (3,)
+    (3,)
+
+    [[7 8 9]]
+    [[7]
+     [8]
+     [9]]
+    (1, 3)
+    (3, 1)
+
+    [[7]
+     [8]
+     [9]]
+    [[7 8 9]]
+    (3, 1)
+    (1, 3)
+
+    (1, 3)
+  #+end_example
+
+- numpy.newaxisを使ったbroadcasting
+
+  #+begin_src python
+    W = np.arange(9).reshape([3,3])
+    A = np.array([10, 20, 30])
+    print(W + 10)                   # add 10 for all elements
+    print(W + A)                    # add [10, 20, 30] 
+    print()
+
+    print(W + A.T)                  # add [[10], [20], [30]]..? NOT!!
+    print()
+
+    print(W + A[np.newaxis, :].T)   # Need 2d matrix to np.transpose
+    print(W + A[:, np.newaxis])     # simple way
+  #+end_src
+
+  #+RESULTS[78e26abe19431f252c97962d09e5c95379d77e00]:
+  #+begin_example
+    [[10 11 12]
+     [13 14 15]
+     [16 17 18]]
+    [[10 21 32]
+     [13 24 35]
+     [16 27 38]]
+
+    [[10 21 32]
+     [13 24 35]
+     [16 27 38]]
+
+    [[10 11 12]
+     [23 24 25]
+     [36 37 38]]
+    [[10 11 12]
+     [23 24 25]
+     [36 37 38]]
+  #+end_example
+
+- Broadcastingの一般論
+
+- 各入力配列の次元数を最大の次元数に揃える。具体的には、足りない次元数だけ大きさ1の次元を"頭に"追加することで行う。
+  - 例）(2, 3) + (3,) ⇒ (2, 3) + (1, 3)
+    - (2, 3, 4, 5) + (4, 5) ⇒ (2, 3, 4, 5) + (1, 1, 4, 5)
+- 出力配列の各次元の大きさを入力配列の次元の大きさの最大値により決める。
+  - 例）(3, 1) + (3,) ⇒ (*3* , 1) + (1, *3*) ∴出力次元は(3, 3)
+    - (2, 3, 1, 5) + (4, 5) ⇒ (*2*, *3*, 1, *5*) + (1, 1, *4*, *5*) ∴出力次元は(2, 3, 4, 5)
+- 全ての入力配列について、各次元の大きさが1であるか、対応する出力配列の次元の大きさに一致すればBroadcasting可能。
+  - 例）(3, 1) + (3,) ⇒ (*3*, 1) + (1, *3*) ∴出力次元は(3, 3)
+    - (3, 1)は0次元目は3で出力配列に一致、1次元目は1なので問題ない。(3,)=(1, 3)も同様に問題ないのでBroadcasting可能。
+      - (2, 3, 1, 3) + (4, 5) ⇒ (*2*, *3*, 1, /3/) + (1, 1, *4*, *5*) ∴出力次元は(2, 3, 4, 5)
+        - (2, 3, 1, /3/)は3次元目が3(≠1)であるが出力配列の3次元目は5なのでBroadcasting不可能。
+- 各入力配列について、大きさが1である次元に関して複製を行い、出力次元に合わせる。
+
+参考：http://docs.scipy.org/doc/numpy/reference/ufuncs.html#broadcasting
+*** 乱数生成
+- 乱数シード
+
+  #+begin_src python
+np.random.seed(12345)
+
+print(np.random.uniform(-10, 10, 10))
+print(np.random.uniform(-10, 10, 10))
+print()
+
+np.random.seed()
+print(np.random.uniform(-10, 10, 10))
+print(np.random.uniform(-10, 10, 10))
+  #+end_src
+
+  #+RESULTS[95f5b9c73e9df5365cc1533e7f4df9bff74267ca]:
+  : [ 8.59232186 -3.67248891 -6.32162377 -5.90879443  1.35450058  1.91089406
+  :   9.29029039  3.06354194  4.97813275  3.07139742]
+  : [ 4.95429619  9.22613472 -9.83223404 -7.87111247 -4.02592572  3.12822366
+  :   6.19625105  7.44351827  9.29295195  4.47370694]
+  : 
+  : [-4.1865872   6.9310534   3.8516509  -9.94132369 -4.31881601 -5.36588355
+  :   7.37959058  6.50354564 -8.77637007 -7.54140603]
+  : [-1.36687549  4.58069217  2.24807465  3.23916939  7.52633048 -7.85156619
+  :  -0.58224738  4.20116744  9.93849221 -6.71604598]
+
+- RandomState
+
+  #+begin_src python
+rng0 = np.random.RandomState(12345)
+rng1 = np.random.RandomState(34567)
+
+print(rng0.uniform(-10, 10, 10))
+print(rng0.uniform(-10, 10, 10))
+print()
+print(rng1.uniform(-10, 10, 10))
+print(rng1.uniform(-10, 10, 10))
+  #+end_src
+
+  #+RESULTS[ece34b50cd851191b7c43f962ecfc7da4af3dad2]:
+  : [ 8.59232186 -3.67248891 -6.32162377 -5.90879443  1.35450058  1.91089406
+  :   9.29029039  3.06354194  4.97813275  3.07139742]
+  : [ 4.95429619  9.22613472 -9.83223404 -7.87111247 -4.02592572  3.12822366
+  :   6.19625105  7.44351827  9.29295195  4.47370694]
+  : 
+  : [ 0.84578049  5.64367245  0.44059251  0.33393034 -1.80405724 -4.56083613
+  :  -2.73392837 -9.36402673  4.4305078  -6.55518693]
+  : [-1.1840454   3.20314396  2.40456073 -9.55762214  5.13698461  5.57364422
+  :   3.90790728  6.15656489  9.020494   -3.01633592]
+
+** 問題 1
+*** 1-1
+#+begin_src python
+x = np.array([7, 8, 9])
+W = np.array([[1, 2, 3], [4, 5, 6]])
+print(x)
+print(W)
+#+end_src
+
+#+RESULTS[552c4aafb4cd2fa6d5e108fa292efbdfed2c5bf3]:
+: [7 8 9]
+: [[1 2 3]
+:  [4 5 6]]
+
+と同様の x, W を得るように np.arange を用いてコードを書いてください。
+
+#+begin_src python
+x = np.arange(7,10)
+W = (np.arange(6)+1).reshape([2,3])
+print(x)
+print(W)
+#+end_src
+
+#+RESULTS[c692fd631684a1f0da7de3a1bb7f626b9f489653]:
+: [7 8 9]
+: [[1 2 3]
+:  [4 5 6]]
+
+*** 1-2
+以下のような表式を得るように W を変形してください。
+
+#+begin_src fundamental
+[[ 1.  0. -1.]
+ [ 4.  3.  2.]]  
+#+end_src
+ヒント: 縦の差は3,横の差は-1
+
+#+begin_src python
+W = (np.arange(6)+1).reshape([2,3])
+
+print(W[:, ::-1] - 2)
+#+end_src
+
+#+RESULTS[502c553d37337a20517603aa598bc478ac04f2c8]:
+: [[1 2 3]
+:  [4 5 6]]
+: [[ 1  0 -1]
+:  [ 4  3  2]]
+
+*** 1-3
+エディントンのイプシロン - Wikipedia
+
+https://goo.gl/8G6gn2
+
+上の「エディントンのイプシロン（Levi-Civita記号）」の記事を参考にして、
+
+「エディントンのイプシロン」を用いてベクトルの外積（クロス積）を実装してください。
+
+#+begin_src python
+def my_cross(u, v):
+    eps = np.zeros((3, 3, 3))
+    eps[0, 1, 2] = eps[1, 2, 0] = eps[2, 0, 1] = 1
+    eps[0, 2, 1] = eps[2, 1, 0] = eps[1, 0, 2] = -1
+    return np.einsum('ijk,j,k->i', eps, u, v)
+
+u = np.array([2,3,4])
+v = np.array([1,2,5])
+print(my_cross(u, v))
+print(np.cross(u, v))
+#+end_src
+
+#+RESULTS[3f87965d7347b395bb9211bb639419506937729b]:
+: [ 7. -6.  1.]
+: [ 7 -6  1]
+
+** * matplotlib
+*** インポート
+*** plot関数の使い方例
+*** ヒストグラム（pyplot.hist）
+*** 2次元画像の扱い（pyplot.imshow）
+*** グラフの分割（figure, subplot）
+** * scikit-learn（sklearn）
+*** shuffle
+*** train_test_split
+*** データセットの取得
+*** Train, Validation, Test 例
+** 参考： 画像処理
+** 問題 2
