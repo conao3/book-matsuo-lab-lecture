@@ -5,17 +5,16 @@
 
 * Config                                                           :noexport:
 
-* chapter2
+* 第2回講義
+** numpy
+*** 概要
+*** インポート
 #+begin_src python
 import numpy as np
 #+end_src
 
 #+RESULTS[60615104acd1cc2e91589bcebaab6b1456ac9ad0]:
 
-* 第2回講義
-** numpy
-*** 概要
-*** インポート
 *** 行列・ベクトルの生成・初期化
 - array :: 要素指定によるnumpy配列の生成
 
@@ -830,16 +829,366 @@ print(np.cross(u, v))
 : [ 7. -6.  1.]
 : [ 7 -6  1]
 
-** * matplotlib
+** matplotlib
 *** インポート
+#+begin_src python
+import matplotlib.pyplot as plt
+#+end_src
+
+#+RESULTS[ca21c7490a0ac6bfcb675beb9bd00e16423159ae]:
+
 *** plot関数の使い方例
+#+begin_src python
+PI = 3.141592
+x = np.arange(-2*PI, 2*PI, 0.1)
+y = np.cos(x)
+plt.plot(x, y)
+plt.show()
+#+end_src
+
+#+RESULTS[f44fd51d5054851a600d8e9268d96f7cf8061112]:
+[[file:./.ob-jupyter/36caa1549808fc55f10f9853df6fac5324cd7183.png]]
+
+#+begin_src python
+y1 = [0, 2, 1]
+y2 = [1, 3, 4]
+plt.plot(y1)
+plt.plot(y2)
+plt.show()
+#+end_src
+
+#+RESULTS[c04a85fe6ddff30c7f47df695998cf1aa6099335]:
+[[file:./.ob-jupyter/d949c15b64827faa551f4a6fb17fdae8d2982587.png]]
+
+#+begin_src python
+x = [3, 4.5, 5, 6]
+y = [0, 2, 1, 3]
+
+plt.plot(x, y)
+plt.show()
+#+end_src
+
+#+RESULTS[58eb15f47fa9e2753e522c64ae59f354c867abd3]:
+[[file:./.ob-jupyter/884941163c2bf84de44cfd25ad7e8a80b98d5c21.png]]
+#+begin_src python
+plt.plot(x, y, 'o')
+plt.show()
+#+end_src
+
+#+RESULTS[be112851ef18bd92c200623d961d7b5772d34c4e]:
+[[file:./.ob-jupyter/dca77c7250dcfec5ef991aad7d7abe670a6fe3c3.png]]
+
 *** ヒストグラム（pyplot.hist）
+#+begin_src python
+r = np.random.normal(0, 10, 10_000)
+plt.hist(r, bins=100)
+plt.show()
+#+end_src
+
+#+RESULTS[c70265c2bdd58d215654b89085b6db50c53fabf8]:
+[[file:./.ob-jupyter/c12d03d48f3b19238826573e5143a469542debe3.png]]
+
+#+begin_src python
+r = np.random.uniform(-10, 10, 10_000)
+plt.hist(r, bins=100)
+plt.show()
+#+end_src
+
+#+RESULTS[365f078e20efa725cc809b27932ddd112aff7ae3]:
+[[file:./.ob-jupyter/620d6d8ba2f4d5910d7a95da8eb5be13623f1c8a.png]]
+
 *** 2次元画像の扱い（pyplot.imshow）
+#+begin_src python
+a = [[1.0, 0.7], [0.2, 0.0]]
+plt.imshow(a, cmap='gray', interpolation='none')
+plt.show()
+#+end_src
+
+#+RESULTS[7efe12b741ac602574a479cf4efae10ad32adf82]:
+[[file:./.ob-jupyter/2b0956fa0ec6dda4daa3c2c1520468edb860b0e1.png]]
+
 *** グラフの分割（figure, subplot）
-** * scikit-learn（sklearn）
+#+begin_src python
+a = [[1.0, 0.7], [0.2, 0.0]]
+b = [[0.0, 0.2], [0.7, 1.0]]
+
+fig = plt.figure()
+sp = fig.add_subplot(1, 2, 1)  # タテ１　ヨコ２　１番目
+sp.imshow(a, cmap='gray', interpolation='none')
+sp = fig.add_subplot(1, 2, 2)  # タテ１　ヨコ２　２番目
+sp.imshow(b, cmap='gray', interpolation='none')
+plt.show()
+#+end_src
+
+#+RESULTS[edcb1b7ef82a9012cfd15dc28fb0d688f910ac27]:
+[[file:./.ob-jupyter/eef737e7addbf1e5d6ddbf7d8d78fc400aaf1a69.png]]
+
+** scikit-learn（sklearn）
 *** shuffle
+#+begin_src python
+from sklearn.utils import shuffle
+
+np.random.seed()
+print(shuffle(range(10)))
+print(shuffle(range(10)))
+print()
+
+np.random.seed(12345)
+print(shuffle(range(10)))
+print(shuffle(range(10)))
+print()
+
+np.random.seed(12345)
+print(shuffle(range(10)))
+print(shuffle(range(10)))
+print()
+
+rng0 = np.random.RandomState(12345)
+rng1 = np.random.RandomState(34567)
+
+print(shuffle(range(10), random_state=rng0))
+print(shuffle(range(10), random_state=rng1))
+print(shuffle(range(10), random_state=rng0))
+print(shuffle(range(10), random_state=rng1))
+print()
+
+
+rng0 = np.random.RandomState(12345)
+rng1 = np.random.RandomState(34567)
+
+print(shuffle(range(10), random_state=rng1))
+print(shuffle(range(10), random_state=rng1))
+print(shuffle(range(10), random_state=rng0))
+print(shuffle(range(10), random_state=rng0))
+#+end_src
+
+#+RESULTS[cdd3db6759ffc47afc21367bb65900d3c52d60bf]:
+#+begin_example
+  [7, 6, 3, 0, 5, 9, 1, 4, 2, 8]
+  [6, 3, 4, 9, 7, 2, 5, 1, 8, 0]
+
+  [0, 7, 3, 9, 6, 4, 1, 8, 5, 2]
+  [4, 0, 9, 5, 7, 3, 8, 6, 1, 2]
+
+  [0, 7, 3, 9, 6, 4, 1, 8, 5, 2]
+  [4, 0, 9, 5, 7, 3, 8, 6, 1, 2]
+
+  [0, 7, 3, 9, 6, 4, 1, 8, 5, 2]
+  [3, 0, 5, 1, 7, 8, 4, 9, 6, 2]
+  [4, 0, 9, 5, 7, 3, 8, 6, 1, 2]
+  [9, 7, 4, 1, 6, 5, 2, 0, 8, 3]
+
+  [3, 0, 5, 1, 7, 8, 4, 9, 6, 2]
+  [9, 7, 4, 1, 6, 5, 2, 0, 8, 3]
+  [0, 7, 3, 9, 6, 4, 1, 8, 5, 2]
+  [4, 0, 9, 5, 7, 3, 8, 6, 1, 2]
+#+end_example
+
 *** train_test_split
+#+begin_src python
+from sklearn.model_selection import train_test_split
+import string
+
+lettersAtoE = string.ascii_uppercase[:5]
+print(lettersAtoE)
+print()
+
+train0to4, test0to4, trainAtoE, testAtoE = train_test_split(range(5), lettersAtoE)
+
+# ABCDEを01234と読みかえるとどうなるか？
+print(train0to4)
+print(trainAtoE)
+print()
+
+print(test0to4)
+print(testAtoE)
+#+end_src
+
+#+RESULTS[a8d5466e10370ba3fee41655f242c5302970f03e]:
+: ABCDE
+: 
+: [3, 1, 2]
+: ['D', 'B', 'C']
+: 
+: [4, 0]
+: ['E', 'A']
+
 *** データセットの取得
-*** Train, Validation, Test 例
+#+begin_src python
+from sklearn.datasets import fetch_openml
+
+# load data on your directry ~/scikit_learn_data/mldata/
+# if data does'nt exist, it downloads the data from site.
+mnist = fetch_openml('MNIST_784', version=1)
+
+# mnist.dataにはたくさんの画像データ（手書き数字）が入っている。
+print(mnist.data.shape)  # image 28 x 28 pixel
+print(mnist.target.shape)  # the label 0,1,2,...,9
+print(set(mnist.target))
+
+plt.imshow(mnist.data[0].reshape(28, 28), cmap='gray', interpolation='none')
+plt.show()
+#+end_src
+
+#+RESULTS[88c414dc5e70baac40b891996a8e6f4699bd4b05]:
+:RESULTS:
+: (70000, 784)
+: (70000,)
+: {'5', '3', '6', '8', '2', '0', '9', '4', '1', '7'}
+[[file:./.ob-jupyter/8d6b774c680e0180e60e800462b830af30d69d2b.png]]
+:END:
+
+#+begin_src python
+import sklearn
+imgs = list(map(lambda x: x.reshape(28, 28), sklearn.utils.shuffle(mnist.data)))
+
+row, col = 1, 4
+
+fig = plt.figure()
+for i in range(row*col):
+    sp = fig.add_subplot(row, col, i+1)  
+    sp.imshow(imgs[i], cmap='gray', interpolation='none')
+plt.show()
+#+end_src
+
+#+RESULTS[101f141153a6038819267dcf7f0d4ae4c5cf800a]:
+[[file:./.ob-jupyter/29fffb4e077da515e32bbebffade25b4ba7f650e.png]]
+
+*** Train, Validation, Test例
+#+begin_src python
+# Select one of Classifeir (LinearSVC, KNeighbor, SDG) using validation set
+# and test best set
+
+from sklearn.svm import LinearSVC
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import SGDClassifier
+
+from sklearn.metrics import accuracy_score
+
+mnist = fetch_openml('MNIST_784', version=1)
+M = len(mnist.data)
+N = 2000  # Use part of MNIST data to save computation time
+# randomly select N numbers from 0 to M
+selected = shuffle(range(M))[:N]
+
+# Split data into Train, Valid, Test
+train_valid_X, test_X, train_valid_y, test_y =\
+    train_test_split(mnist.data[selected], mnist.target[selected])
+train_X, valid_X, train_y, valid_y =\
+    train_test_split(train_valid_X, train_valid_y)
+
+classifiers = [LinearSVC(), KNeighborsClassifier(), SGDClassifier()]
+
+# Train each classifier with Train set
+accs = []
+for clf_type, classifier in enumerate(classifiers):
+    classifier.fit(train_X, train_y)
+    pred_train = classifier.predict(train_X)
+    acc_train = accuracy_score(train_y, pred_train)
+    pred_valid = classifier.predict(valid_X)
+    acc_valid = accuracy_score(valid_y, pred_valid)
+    print("classifier type: %d, Train Accuracy: %f, Validation Accuracy %f" \
+        % (clf_type, acc_train, acc_valid))
+    accs.append(acc_valid)
+
+# Chose best classifier with the highest validation accuracy
+i_clf_best = np.argmax(accs)
+print("Best Classifier: %d" % i_clf_best)
+clf_best = classifiers[i_clf_best]
+
+# Test selected classifier
+pred = clf_best.predict(test_X)
+acc = accuracy_score(test_y, pred)
+print("Test(Best Classifier): %f" % acc)
+#+end_src
+
+#+RESULTS[d208882d6f2f113ab77fc2db012185cd7cdfe48a]:
+: /home/conao/.anyenv/envs/pyenv/versions/3.8.2/lib/python3.8/site-packages/sklearn/svm/_base.py:976: ConvergenceWarning: Liblinear failed to converge, increase the number of iterations.
+:   warnings.warn("Liblinear failed to converge, increase "
+: classifier type: 0, Train Accuracy: 1.000000, Validation Accuracy 0.826667
+: classifier type: 1, Train Accuracy: 0.919111, Validation Accuracy 0.922667
+: classifier type: 2, Train Accuracy: 0.992000, Validation Accuracy 0.834667
+: Best Classifier: 1
+: Test(Best Classifier): 0.892000
+
 ** 参考： 画像処理
+#+begin_src python
+import scipy.ndimage
+
+ZOOM = 10  # 変えてみよう
+SIGMA = 10  # 変えてみよう
+ANGLE = 45  # 変えてみよう
+
+img = mnist.data[-1].reshape(28, 28)
+plt.imshow(img, cmap='gray', interpolation='none')
+plt.show()
+
+# 縮小拡大
+img = scipy.ndimage.zoom(img, (ZOOM, ZOOM), order=1)
+# ぼかし
+img = scipy.ndimage.gaussian_filter(img, SIGMA)
+# 回転
+img = scipy.ndimage.rotate(img, ANGLE)
+
+plt.imshow(img, cmap='gray', interpolation='none')
+plt.show()
+# edge抽出など
+# http://scikit-image.org/docs/dev/auto_examples/plot_canny.html
+# http://www.tp.umu.se/~nylen/fnm/pylect/advanced/image_processing/index.html
+#+end_src
+
+#+RESULTS[cb58bbc92193f7031ab007832ce53fe3bd57806c]:
+:RESULTS:
+[[file:./.ob-jupyter/cee77a3d0caea15820f8a8d267dbde44fc86e3f6.png]]
+[[file:./.ob-jupyter/80f8176ce41add5e6d7f9a5d65a9be3df7dbb5b1.png]]
+:END:
+
 ** 問題 2
+2-1. mnist.data には画像は何枚あるでしょうか。
+
+2-2. 画像データはどのようなグレースケールで表されているでしょうか。
+
+2-3. ４枚の数字を 縦2  ×  横2 で表示してみましょう。
+
+2-4. mnist にはどの数字がどれだけ入っているでしょうか。
+
+#+begin_src python
+from sklearn import datasets
+
+mnist = fetch_openml('MNIST_784', version=1)
+#+end_src
+
+#+begin_src python
+print("2-1: %d" % mnist.data.shape[0])
+print("2-2: %s" % type(mnist.data[0][0]))
+print("2-3")
+imgs = list(map(lambda x: x.reshape(28, 28), sklearn.utils.shuffle(mnist.data)))
+fig = plt.figure()
+for i in range(4):
+    ax = fig.add_subplot(2, 2, i + 1)
+    ax.imshow(imgs[i], cmap='gray', interpolation='none')
+fig.show()
+print("2-4")
+import collections
+collections.Counter(mnist.target)
+#+end_src
+#+RESULTS[31933bb8094c95fa6301fde064c8650726d7bfb4]:
+:RESULTS:
+: 2-1: 70000
+: 2-2: <class 'numpy.float64'>
+: 2-3
+: 2-4
+: <ipython-input-35-8f308fe4cfa7>:9: UserWarning: Matplotlib is currently using module://ipykernel.pylab.backend_inline, which is a non-GUI backend, so cannot show the figure.
+:   fig.show()
+: Counter({'5': 6313,
+:          '0': 6903,
+:          '4': 6824,
+:          '1': 7877,
+:          '9': 6958,
+:          '2': 6990,
+:          '3': 7141,
+:          '6': 6876,
+:          '7': 7293,
+:          '8': 6825})
+[[file:./.ob-jupyter/f9b62e62d569b3803b2fcf330efba4331c93c321.png]]
+:END:
