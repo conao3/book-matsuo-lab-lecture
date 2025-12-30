@@ -1,46 +1,49 @@
+#+title: book-matsuo-lab-lecture
 #+author: conao3
-#+date: <2020-03-20 Fri>
 
-[[https://github.com/conao3/book-matsuo-lab-lecture][https://raw.githubusercontent.com/conao3/files/master/blob/headers/png/book-matsuo-lab-lecture.png]]
-[[https://github.com/conao3/book-matsuo-lab-lecture/blob/master/LICENSE][https://img.shields.io/github/license/conao3/book-matsuo-lab-lecture.svg?style=flat-square]]
-[[https://github.com/conao3/book-matsuo-lab-lecture/releases][https://img.shields.io/github/tag/conao3/book-matsuo-lab-lecture.svg?style=flat-square]]
-[[https://github.com/conao3/book-matsuo-lab-lecture/actions][https://img.shields.io/badge/patreon-become%20a%20patron-orange.svg?logo=patreon&style=flat-square]]
-[[https://twitter.com/conao_3][https://img.shields.io/badge/twitter-@conao__3-blue.svg?logo=twitter&style=flat-square]]
-[[https://conao3-support.slack.com/join/shared_invite/enQtNjUzMDMxODcyMjE1LWUwMjhiNTU3Yjk3ODIwNzAxMTgwOTkxNmJiN2M4OTZkMWY0NjI4ZTg4MTVlNzcwNDY2ZjVjYmRiZmJjZDU4MDE][https://img.shields.io/badge/chat-on_slack-blue.svg?logo=slack&style=flat-square]]
+* Matsuo Lab Deep Learning Course Exercises
 
-* Table of Contents
-- [[#description][Description]]
-- [[#install][Install]]
-- [[#usage][Usage]]
-- [[#information][Information]]
-  - [[#community][Community]]
-  - [[#contribution][Contribution]]
-  - [[#license][License]]
-  - [[#author][Author]]
+Personal exercises and notes from the [[https://weblab.t.u-tokyo.ac.jp/deep-learning%e5%9f%ba%e7%a4%8e%e8%ac%9b%e5%ba%a7%e6%bc%94%e7%bf%92%e3%82%b3%e3%83%b3%e3%83%86%e3%83%b3%e3%83%84-%e5%85%ac%e9%96%8b%e3%83%9a%e3%83%bc%e3%82%b8/][Matsuo Lab Deep Learning Fundamentals Course]] at the University of Tokyo.
 
-* Description
-Exercise on [[https://weblab.t.u-tokyo.ac.jp/deep-learning%e5%9f%ba%e7%a4%8e%e8%ac%9b%e5%ba%a7%e6%bc%94%e7%bf%92%e3%82%b3%e3%83%b3%e3%83%86%e3%83%b3%e3%83%84-%e5%85%ac%e9%96%8b%e3%83%9a%e3%83%bc%e3%82%b8/][Matsuo lab recture]].
+** Contents
 
-* Install
+| Chapter | Topic                                       | Format   |
+|---------+---------------------------------------------+----------|
+|       1 | Course introduction                         | org-mode |
+|       2 | NumPy, Matplotlib, scikit-learn basics      | org-mode |
+|       3 | Deep learning exercises                     | Jupyter  |
+|       4 | Advanced topics                             | Jupyter  |
 
-* Usage
+** Topics Covered
 
-* Information
-** Community
-All feedback and suggestions are welcome!
+- NumPy array operations and broadcasting
+- Matrix and tensor computations (matmul, tensordot, einsum)
+- Random number generation
+- Data visualization with Matplotlib
+- Machine learning workflows with scikit-learn
+- MNIST dataset handling and image classification
 
-You can use github issues, but you can also use [[https://conao3-support.slack.com/join/shared_invite/enQtNjUzMDMxODcyMjE1LWUwMjhiNTU3Yjk3ODIwNzAxMTgwOTkxNmJiN2M4OTZkMWY0NjI4ZTg4MTVlNzcwNDY2ZjVjYmRiZmJjZDU4MDE][Slack]]
-if you want a more casual conversation.
+** Getting Started
 
-** Contribution
-We welcome PR!
+Clone the repository and open the chapter files in Emacs (for org-mode) or Jupyter (for notebooks).
+
+#+begin_src shell
+git clone https://github.com/conao3/book-matsuo-lab-lecture.git
+cd book-matsuo-lab-lecture
+#+end_src
+
+** Requirements
+
+- Python 3.x
+- NumPy
+- Matplotlib
+- scikit-learn
+- Jupyter (for notebook chapters)
 
 ** License
-#+begin_example
-  MIT License
-  Copyright (c) Naoya Yamashita - https://conao3.com
-  https://github.com/conao3/book-matsuo-lab-lecture/blob/master/LICENSE
-#+end_example
+
+MIT License. See [[file:LICENSE][LICENSE]] for details.
 
 ** Author
-- Naoya Yamashita ([[https://github.com/conao3][conao3]])
+
+Naoya Yamashita ([[https://github.com/conao3][conao3]])
